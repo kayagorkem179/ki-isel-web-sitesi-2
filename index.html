@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Görkem Kaya | Birikmiş Anılar</title>
+
+    <style>
+        :root {
+            --background: #101113;
+            --surface: #191b1f;
+            --surface-light: #22252a;
+            --text: #f2f0eb;
+            --muted: #a5a7ad;
+            --accent: #d2a96b;
+            --line: rgba(255, 255, 255, 0.11);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(ellipse at 15% 0%, rgba(210, 169, 107, 0.12), transparent 34rem),
+                var(--background);
+            color: var(--text);
+            font-family: "Segoe UI", Arial, sans-serif;
+            line-height: 1.7;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img,
+        video {
+            display: block;
+            width: 100%;
+        }
+
+        .container {
+            width: min(1120px, calc(100% - 40px));
+            margin-inline: auto;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid var(--line);
+            background: rgba(16, 17, 19, 0.9);
+            backdrop-filter: blur(14px);
+        }
+
+        .nav {
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            font-weight: 800;
+            letter-spacing: 0.04em;
+        }
+
+        .brand span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .hero {
+            min-height: 540px;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            align-items: center;
+            gap: 48px;
+            padding-block: 76px;
+        }
+
+        .eyebrow {
+            color: var(--accent);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 12px 0 18px;
+            font-size: clamp(3rem, 8vw, 6.4rem);
+            line-height: 0.98;
+            letter-spacing: -0.065em;
+        }
+
+        h1 span {
+            color: var(--accent);
+        }
+
+        .hero-copy {
+            max-width: 590px;
+            color: var(--muted);
+            font-size: 1.08rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 11px 18px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: var(--text);
+            transition: 0.2s ease;
+        }
+
+        .button.primary {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: #17130e;
+            font-weight: 700;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+
+        .hero-photo {
+            position: relative;
+            min-height: 390px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            background: var(--surface);
+        }
+
+        .hero-photo img {
+            position: absolute;
+            inset: 0;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 35%;
+            filter: brightness(0.82);
+        }
+
+        .photo-label {
+            position: absolute;
+            right: 16px;
+            bottom: 16px;
+            left: 16px;
+            padding: 14px 16px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: rgba(16, 17, 19, 0.78);
+            backdrop-filter: blur(10px);
+        }
+
+        .photo-label strong {
+            display: block;
+            color: var(--accent);
+        }
+
+        .photo-label small {
+            color: var(--muted);
+        }
+
+        section {
+            padding-block: 76px;
+            border-top: 1px solid var(--line);
+        }
+
+        .section-heading {
+            max-width: 720px;
+            margin-bottom: 32px;
+        }
+
+        .section-heading h2 {
+            margin: 6px 0 10px;
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            line-height: 1.1;
+            letter-spacing: -0.045em;
+        }
+
+        .section-heading p,
+        .muted {
+            color: var(--muted);
+        }
+
+        .story-layout {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        .story-image,
+        .card,
+        .memory-card,
+        .music-card,
+        .video-card,
+        .timeline-card {
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: var(--surface);
+        }
+
+        .story-image img {
+            height: 440px;
+            object-fit: cover;
+        }
+
+        .story-text {
+            padding: 28px;
+        }
+
+        .story-text p+p {
+            margin-top: 16px;
+        }
+
+        .timeline {
+            display: grid;
+            gap: 14px;
+        }
+
+        .timeline-card {
+            display: grid;
+            grid-template-columns: 125px 1fr;
+            gap: 18px;
+            padding: 22px;
+        }
+
+        .timeline-date {
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .timeline-card h3 {
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .timeline-card p {
+            color: var(--muted);
+        }
+
+        .memory-grid,
+        .video-grid,
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .memory-card img {
+            height: 310px;
+            object-fit: cover;
+            transition: transform 0.35s ease;
+        }
+
+        .memory-card:hover img {
+            transform: scale(1.04);
+        }
+
+        .memory-caption,
+        .card-content {
+            padding: 18px;
+        }
+
+        .memory-caption h3,
+        .card-content h3 {
+            margin-bottom: 5px;
+        }
+
+        .memory-caption p,
+        .card-content p {
+            color: var(--muted);
+            font-size: 0.94rem;
+        }
+
+        .video-card video {
+            aspect-ratio: 16 / 10;
+            background: #08090a;
+            object-fit: contain;
+        }
+
+        .music-card {
+            padding: 20px;
+        }
+
+        .music-card p {
+            min-height: 50px;
+            margin-bottom: 14px;
+            color: var(--muted);
+        }
+
+        audio {
+            width: 100%;
+            accent-color: var(--accent);
+        }
+
+        .quote {
+            margin-top: 28px;
+            padding: 24px;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 14px 14px 0;
+            background: var(--surface);
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        .quote strong {
+            color: var(--text);
+        }
+
+        .ending {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 26px;
+            align-items: center;
+            padding: 26px;
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            background: var(--surface);
+        }
+
+        .ending img {
+            max-height: 420px;
+            border-radius: 14px;
+            object-fit: cover;
+        }
+
+        .ending h3 {
+            margin-bottom: 12px;
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        .ending p {
+            color: var(--muted);
+        }
+
+        footer {
+            padding: 32px 20px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            text-align: center;
+        }
+
+        footer span {
+            color: var(--accent);
+        }
+
+        @media (max-width: 800px) {
+
+            .hero,
+            .story-layout,
+            .ending {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                gap: 28px;
+                padding-top: 54px;
+            }
+
+            .hero-photo {
+                min-height: 420px;
+            }
+
+            .memory-grid,
+            .video-grid,
+            .music-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .story-image img {
+                height: 360px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .container {
+                width: min(100% - 28px, 1120px);
+            }
+
+            .nav {
+                align-items: flex-start;
+                flex-direction: column;
+                justify-content: center;
+                padding-block: 12px;
+            }
+
+            .nav-links {
+                gap: 12px;
+                font-size: 0.82rem;
+            }
+
+            section {
+                padding-block: 54px;
+            }
+
+            .memory-grid,
+            .video-grid,
+            .music-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-card {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+
+            .memory-card img {
+                height: 350px;
+            }
+
+            .ending {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="topbar">
+        <nav class="nav container" aria-label="Ana menü">
+            <a class="brand" href="#anasayfa">GÖRKEM<span>.</span></a>
+            <div class="nav-links">
+                <a href="#hikayem">Hikâyem</a>
+                <a href="#yolculuk">Eğitim</a>
+                <a href="#anilar">Anılar</a>
+                <a href="#videolar">Videolar</a>
+                <a href="#muzik">Müzik</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="hero" id="anasayfa" style="border-top: 0;">
+                <div>
+                    <p class="eyebrow">Kişisel biyografi · Marmaris</p>
+                    <h1>Görkem<br><span>Kaya</span></h1>
+                    <p class="hero-copy">
+                        Merhaba, ben Görkem Kaya. Marmaris’te başlayan hayat yolculuğumu,
+                        okul yıllarımı, dostluklarımı ve müzik üretme tutkumla biriktirdiğim
+                        anıları burada paylaşıyorum.
+                    </p>
+                    <div class="hero-buttons">
+                        <a class="button primary" href="#hikayem">Hikâyemi oku</a>
+                        <a class="button" href="#muzik">Müzik seçkisine git</a>
+                    </div>
+                </div>
+
+                <div class="hero-photo">
+                    <img src="foto günü.jpeg" alt="Görkem'in fotoğraf günü portresi">
+                    <div class="photo-label">
+                        <strong>Görkem Kaya</strong>
+                        <small>Prodüktör · Bilgisayar programcılığı öğrencisi</small>
+                    </div>
+                </div>
+            </section>
+
+            <section id="hikayem">
+                <div class="section-heading">
+                    <p class="eyebrow">Başlangıç</p>
+                    <h2>Her şey küçük bir çocukken başladı.</h2>
+                    <p>
+                        Bu sayfa, çocukluk fotoğraflarımdan okul günlerine ve birlikte
+                        büyüdüğüm arkadaşlarıma uzanan kişisel bir anı albümü.
+                    </p>
+                </div>
+
+                <div class="story-layout">
+                    <figure class="story-image">
+                        <img src="çocukluk.jpeg" alt="Görkem'in çocukluk fotoğrafı">
+                    </figure>
+
+                    <article class="card story-text">
+                        <p>
+                            21 Temmuz 2008’de Muğla’nın Marmaris ilçesinde dünyaya geldim.
+                            İlk fotoğraf, üç yaşlarındaki hâlim. Eski fotoğraflarım çok fazla
+                            olmadığı için bu kareyi özellikle sakladım. Geriye dönüp bakınca,
+                            hikâyemin ilk sayfalarından biri gibi geliyor.
+                        </p>
+                        <p>
+                            İlkokulumu Atatürk İlkokulunda, ortaokulumu Selimeye Şükrü Tugay
+                            Ortaokulunda okudum. Lise yıllarım Nurettin Gençalioğlu Anadolu
+                            Lisesinde geçti. Şu anda Ağlasun Meslek Yüksekokul'unda Bilgisayar
+                            Programcılığı bölümünde eğitimime devam ediyorum.
+                        </p>
+                        <p>
+                            Zaman içinde müziğe ve prodüksiyona ilgim büyüdü. Bugün kendimi
+                            prodüktör olarak tanıtıyor; beat, sample ve müzik projeleri
+                            üzerinde çalışıyorum. Bu biyografide okuldan ve arkadaşlarımdan
+                            kalan anıları da müzik yolculuğumla birlikte anlatıyorum.
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section id="yolculuk">
+                <div class="section-heading">
+                    <p class="eyebrow">Yıllar içinde</p>
+                    <h2>Eğitim ve büyüme yolculuğum</h2>
+                    <p>Her okul dönemi, hafızamda ayrı bir iz bıraktı.</p>
+                </div>
+
+                <div class="timeline">
+                    <article class="timeline-card">
+                        <div class="timeline-date">Çocukluk</div>
+                        <div>
+                            <h3>Atatürk İlkokulu</h3>
+                            <p>Okul hayatımın ilk adımlarını burada attım.</p>
+                        </div>
+                    </article>
+
+                    <article class="timeline-card">
+                        <div class="timeline-date">Ortaokul</div>
+                        <div>
+                            <h3>Selimeye Şükrü Tugay Ortaokulu</h3>
+                            <p>Ortaokul yıllarımı burada tamamladım.</p>
+                        </div>
+                    </article>
+
+                    <article class="timeline-card">
+                        <div class="timeline-date">Lise</div>
+                        <div>
+                            <h3>Nurettin Gençalioğlu Anadolu Lisesi</h3>
+                            <p>Lise yıllarım, sınıf arkadaşlarım ve unutamadığım anılarım burada birikti.</p>
+                        </div>
+                    </article>
+
+                    <article class="timeline-card">
+                        <div class="timeline-date">Bugün</div>
+                        <div>
+                            <h3>Ağlasun Meslek Yüksekokulu · Bilgisayar Programcılığı</h3>
+                            <p>Bilgisayar programcılığı alanında eğitimime devam ediyorum.</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section id="anilar">
+                <div class="section-heading">
+                    <p class="eyebrow">Fotoğraf albümü</p>
+                    <h2>Arkadaşlarım ve okuldan anılar</h2>
+                    <p>
+                        Bazı fotoğraflar tek başına bir günü, bazıları ise yıllar süren
+                        arkadaşlıkları hatırlatıyor.
+                    </p>
+                </div>
+
+                <div class="memory-grid">
+                    <article class="memory-card">
+                        <img src="9. sınıf'taki halim.jpeg" alt="Görkem'in 9. sınıftaki fotoğrafı">
+                        <div class="memory-caption">
+                            <h3>9. sınıftan bir kare</h3>
+                            <p>Saçlarımın daha uzun olduğu lise başlangıcı yıllarım.</p>
+                        </div>
+                    </article>
+
+                    <article class="memory-card">
+                        <img src="oyun.jpeg" alt="Görkem ve arkadaşı okul bahçesinde">
+                        <div class="memory-caption">
+                            <h3>Oyuna dalmışken</h3>
+                            <p>Arkadaşım arkada telefonunda oyun oynarken çekilmiş bir selfie.</p>
+                        </div>
+                    </article>
+
+                    <article class="memory-card">
+                        <img src="şaka.jpeg" alt="Arkadaşın tel örgünün arkasında oturduğu an">
+                        <div class="memory-caption">
+                            <h3>Yiğit Dağ’a takıldığımız gün</h3>
+                            <p>Tel örgü ve bank etrafında gelişen, sonradan gülerek hatırladığımız şaka.</p>
+                        </div>
+                    </article>
+
+                    <article class="memory-card">
+                        <img src="arkadaşlar.jpeg" alt="Görkem ve arkadaşları birlikte">
+                        <div class="memory-caption">
+                            <h3>Arkadaşlarla</h3>
+                            <p>Birlikte geçirdiğimiz günlerden toplu bir hatıra.</p>
+                        </div>
+                    </article>
+
+                    <article class="memory-card">
+                        <img src="dostluk.jpeg" alt="Görkem ve arkadaşı">
+                        <div class="memory-caption">
+                            <h3>Dostluk</h3>
+                            <p>Güzel bir günden, arkadaşlarımla çekilmiş bir fotoğraf.</p>
+                        </div>
+                    </article>
+
+                    <article class="memory-card">
+                        <img src="emre ve ben.jpeg" alt="Görkem ve Emre">
+                        <div class="memory-caption">
+                            <h3>Emre ile</h3>
+                            <p>Çok sevdiğim arkadaşım Emre’yle bir anı. Şu sıralar eskisi kadar görüşemesek de yeri
+                                ayrı.</p>
+                        </div>
+                    </article>
+
+                    <article class="memory-card">
+                        <img src="civan ve onur.jpeg" alt="Görkem, Civan ve Onur">
+                        <div class="memory-caption">
+                            <h3>Civan ve Onur</h3>
+                            <p>Fotoğrafta benim solumda gözlüklü Civan, sağımda Onur var. İkiz oldukları belli oluyor.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="memory-card">
+                        <img src="enes kankam ile foto.jpeg" alt="Görkem ve Enes">
+                        <div class="memory-caption">
+                            <h3>Enes kankamla</h3>
+                            <p>Mezuna kalmış olsa da dostluğumuz devam ediyor; onu hâlâ çok seviyorum.</p>
+                        </div>
+                    </article>
+
+                    <article class="memory-card">
+                        <img src="mahmutla foto.jpeg" alt="Görkem ve Mahmut">
+                        <div class="memory-caption">
+                            <h3>Mahmut’la</h3>
+                            <p>Mahmut şimdi Isparta Uygulamalı Bilimler Üniversitesinde okuyor.</p>
+                        </div>
+                    </article>
+
+                    <article class="memory-card">
+                        <img src="hakan hocam.jpeg" alt="Görkem ve tarih öğretmeni Hakan Hoca">
+                        <div class="memory-caption">
+                            <h3>Hakan Hocam</h3>
+                            <p>Tarih öğretmenim Hakan Hoca’yla. Kendisi benim için çok kıymetli bir öğretmen.</p>
+                        </div>
+                    </article>
+
+                    <article class="memory-card">
+                        <img src="kimya hocamız.jpeg" alt="Mezuniyet günü kimya öğretmeni ve sınıf arkadaşları">
+                        <div class="memory-caption">
+                            <h3>Özge Hocamız ve sınıf</h3>
+                            <p>Kimya öğretmenimiz Özge Hoca’yla mezuniyet gününde çekildiğimiz toplu fotoğraf.</p>
+                        </div>
+                    </article>
+
+                    <article class="memory-card">
+                        <img src="foto günü.jpeg" alt="Mezuniyet fotoğraf çekiminden Görkem">
+                        <div class="memory-caption">
+                            <h3>Fotoğraf çekiminden</h3>
+                            <p>Mezuniyet fotoğraf çekimi gününden bir kare.</p>
+                        </div>
+                    </article>
+
+                    <article class="memory-card">
+                        <img src="civan ve onur.jpeg" alt="Mezuniyet fotoğrafında Görkem ve arkadaşları">
+                        <div class="memory-caption">
+                            <h3>Mezuniyet pozu</h3>
+                            <p>Arkadaşlarımla mezuniyet gününde çekildiğimiz fotoğraf.</p>
+                        </div>
+                    </article>
+
+                    <article class="memory-card">
+                        <img src="veda günü.jpeg" alt="Sınıf arkadaşları ve öğretmenle veda günü">
+                        <div class="memory-caption">
+                            <h3>Veda günü</h3>
+                            <p>Sınıf arkadaşlarımızla ve öğretmenimizle bir arada olduğumuz gün.</p>
+                        </div>
+                    </article>
+
+                    <article class="memory-card">
+                        <img src="hediye.jpeg" alt="Doğum günü hediyesi anından Görkem">
+                        <div class="memory-caption">
+                            <h3>Mert’e doğum günü hediyesi</h3>
+                            <p>Sevdiğim arkadaşım Mert için aldığım kartları verdiğim günden bir anı.</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="quote">
+                    <strong>“Bazı günler fotoğraflarda kalıyor, bazı arkadaşlıklar ise insanın içinde.”</strong>
+                    <br>
+                    Bu albüm, birlikte güldüğümüz ve yıllar sonra da hatırlayacağımız anılardan oluşuyor.
+                </div>
+            </section>
+
+            <section id="videolar">
+                <div class="section-heading">
+                    <p class="eyebrow">Hareketli anılarım</p>
+                    <h2>Videolardan kısa kesitler</h2>
+                </div>
+
+                <div class="video-grid">
+                    <article class="video-card">
+                        <video controls preload="metadata">
+                            <source src="yemek sınıf.mp4" type="video/mp4">
+                            Tarayıcınız video etiketini desteklemiyor.
+                        </video>
+                        <div class="card-content">
+                            <h3>Sınıfla yemek videosu</h3>
+                            <p>12. sınıfın ilk döneminde arkadaşlarla gittiğimiz yemekten. Videoda birçok arkadaşım var;
+                                soruları ve sohbeti izleyebilirsiniz.</p>
+                        </div>
+                    </article>
+
+                    <article class="video-card">
+                        <video controls preload="metadata">
+                            <source src="mezuniyet akımı.mp4" type="video/mp4">
+                            Tarayıcınız video etiketini desteklemiyor.
+                        </video>
+                        <div class="card-content">
+                            <h3>Mezuniyet akımı</h3>
+                            <p>TikTok için çektiğimiz kısa mezuniyet akımı videosu.</p>
+                        </div>
+                    </article>
+
+                    <article class="video-card">
+                        <video controls preload="metadata">
+                            <source src="Atatürk'ü Anma ve konuşma.mp4" type="video/mp4">
+                            Tarayıcınız video etiketini desteklemiyor.
+                        </video>
+                        <div class="card-content">
+                            <h3>Atatürk’ü anma ve konuşma</h3>
+                            <p>Sınıfça katıldığımız anma ve konuşma etkinliğinden bir bölüm.</p>
+                        </div>
+                    </article>
+
+                    <article class="video-card">
+                        <video controls preload="metadata">
+                            <source src="yapay zeka akımı.mp4" type="video/mp4">
+                            Tarayıcınız video etiketini desteklemiyor.
+                        </video>
+                        <div class="card-content">
+                            <h3>Yapay zekâ akımı</h3>
+                            <p>9. sınıftaki fotoğrafımla katıldığım yapay zekâ akımı.</p>
+                        </div>
+                    </article>
+
+                    <article class="video-card">
+                        <video controls preload="metadata">
+                            <source src="beşiktaş'ım benim.mp4" type="video/mp4">
+                            Tarayıcınız video etiketini desteklemiyor.
+                        </video>
+                        <div class="card-content">
+                            <h3>Beşiktaş formalı video</h3>
+                            <p>Sosyal medyada gördüğüm yapay zekâ fikrini merak edip denediğim kısa video.</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="story-layout" style="margin-top: 22px;">
+                    <article class="card story-text">
+                        <h3 style="color: var(--accent); margin-bottom: 10px;">Mezuniyet ve sınıf arkadaşlarım</h3>
+                        <p>
+                            Mezuniyet günü hepimiz karnelerimizi aldık ve sınıf öğretmenimizle
+                            vedalaştık. Atatürk’ü anma etkinliğinde de sınıfça yer aldık.
+                            Bu günler, lise yıllarımın kapanışını ve arkadaşlarımla biriktirdiğim
+                            anıları hatırlatıyor.
+                        </p>
+                    </article>
+                    <figure class="story-image">
+                        <img src="veda günü.jpeg" alt="Sınıf arkadaşlarıyla veda günü">
+                    </figure>
+                </div>
+            </section>
+
+            <section id="muzik">
+                <div class="section-heading">
+                    <p class="eyebrow">Müzik</p>
+                    <h2>Prodüksiyon yolculuğum</h2>
+                    <p>
+                        Müzik üretmek, beat ve sample’larla uğraşmak benim için önemli bir
+                        uğraş. Aşağıdaki parçalar sayfaya eklediğim müzik kataloğumdur bu parçaların bazılarını bizat kayıt alınırken yer aldım.
+                        Türkçe Rap camiasının önemli main stream,hit makerlarıyla çalışmak büyük bir onurdu benim için çalıştığım bazı isimler şu şekilde;
+                        <li>-ÇAKAL</li>
+                        <li>-KUTY</li>
+                        <li>-RECKOL</li>
+                        <li>-ERA7CAPONE</li>
+                        Ve bu gibi birkaç isimle daha çalıştım.
+                    </p>
+                </div>
+
+                <div class="music-grid">
+                    <article class="music-card">
+                        <h3>KUTY — Bumerang</h3>
+                        <p>Müzik seçkisinden bir parça.</p>
+                        <audio controls preload="none">
+                            <source src="mp3indirdur-KUTY-Bumerang.mp3" type="audio/mpeg">
+                            Tarayıcınız ses oynatmayı desteklemiyor.
+                        </audio>
+                    </article>
+
+                    <article class="music-card">
+                        <h3>KUTY — Flex</h3>
+                        <p>Müzik seçkisinden bir parça.</p>
+                        <audio controls preload="none">
+                            <source src="mp3indirdur-KUTY-Flex.mp3" type="audio/mpeg">
+                            Tarayıcınız ses oynatmayı desteklemiyor.
+                        </audio>
+                    </article>
+
+                    <article class="music-card">
+                        <h3>Era7Capone — No Cap</h3>
+                        <p>Müzik seçkisinden bir parça.</p>
+                        <audio controls preload="none">
+                            <source src="mp3indirdur-Era7Capone-No-Cap.mp3" type="audio/mpeg">
+                            Tarayıcınız ses oynatmayı desteklemiyor.
+                        </audio>
+                    </article>
+
+                    <article class="music-card">
+                        <h3>Çakal — Kayıp Yıllarım</h3>
+                        <p>Müzik seçkisinden bir parça.</p>
+                        <audio controls preload="none">
+                            <source src="mp3indirdur-Cakal-Kayip-Yillarim.mp3" type="audio/mpeg">
+                            Tarayıcınız ses oynatmayı desteklemiyor.
+                        </audio>
+                    </article>
+
+                    <article class="music-card">
+                        <h3>Reckol — Harmandalı</h3>
+                        <p>Müzik seçkisinden bir parça.</p>
+                        <audio controls preload="none">
+                            <source src="mp3indirdur-Reckol-Harmandali.mp3" type="audio/mpeg">
+                            Tarayıcınız ses oynatmayı desteklemiyor.
+                        </audio>
+                    </article>
+
+                    <article class="music-card">
+                        <h3>Çakal — Hâlâ Damarımda</h3>
+                        <p>Müzik seçkisinden bir parça.</p>
+                        <audio controls preload="none">
+                            <source src="mp3indirdur-Cakal-Hala-Damarimda.mp3" type="audio/mpeg">
+                            Tarayıcınız ses oynatmayı desteklemiyor.
+                        </audio>
+                    </article>
+                </div>
+            </section>
+
+            <section id="tesekkur">
+                <div class="section-heading">
+                    <p class="eyebrow">Son sayfa</p>
+                    <h2>Teşekkür ederim.</h2>
+                    <p>Bu yolculukta yanımda olan herkese ve beni dinlediğiniz için size teşekkür ederim.</p>
+                </div>
+
+                <div class="ending">
+                    <div>
+                        <h3>Sınıf öğretmenimizle</h3>
+                        <p>
+                            Mezuniyet ve veda günümüzden kalan bu fotoğraf, sınıfça
+                            paylaştığımız yılları hatırlatıyor. Öğretmenimize ve bütün
+                            arkadaşlarıma emekleri, destekleri ve güzel anılar için teşekkür ederim.
+                        </p>
+                    </div>
+                    <img src="veda günü.jpeg" alt="Görkem'in sınıfı ve öğretmeniyle veda fotoğrafı">
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>© Görkem Kaya · Anılar, dostluklar ve müzikle. <span>♥</span></p>
+    </footer>
+</body>
+
+</html>
